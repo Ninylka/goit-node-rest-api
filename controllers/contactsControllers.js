@@ -3,6 +3,7 @@ import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import HttpError from "../helpers/HttpError.js";
 
 
+
  const getAllContacts = async (req, res) => {
     const result = await contacts.listContacts();
     res.json(result);
@@ -48,6 +49,8 @@ const updateContact = async (req, res) => {
     res.json(result)
 
 };
+
+
 
  const deleteContact = async(req, res) => {
     const {id} = req.params;
