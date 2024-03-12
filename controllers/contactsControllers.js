@@ -17,9 +17,9 @@ const getAllContacts = async (req, res) => {
 
 
 const getOneContact = async (req, res) => {
-   
+    const {_id : owner} = req.user;
         const {id} = req.params;
-        const result = await Contact.findById(id);
+        const result = await Contact.findById({id, owner});
         if(!result) {
             throw HttpError(404);
         }
@@ -45,13 +45,13 @@ const createContact = async (req, res) => {
 
 
 const updateContact = async (req, res) => {
-    const { id, } = req.params;
-
+    const { id } = req.params;
+    const {_id : owner} = req.user;
     const updatedContact = {
         ...req.body
     };
     
-    const result = await Contact.findByIdAndUpdate(id, updatedContact, { new: true });
+    const result = await Contact.findByIdAndUpdate({id , owner}, updatedContact, { new: true });
 
     if (!result) {
         throw HttpError(404);
@@ -62,12 +62,12 @@ const updateContact = async (req, res) => {
 
 const updateStatusContact = async (req, res) => {
     const { id } = req.params;
-
+    const {_id : owner} = req.user;
     const updatedContact = {
         ...req.body
     };
     
-    const result = await Contact.findByIdAndUpdate(id, updatedContact, { new: true });
+    const result = await Contact.findByIdAndUpdate({id , owner}, updatedContact, { new: true });
 
     if (!result) {
         throw HttpError(404);
@@ -79,7 +79,8 @@ const updateStatusContact = async (req, res) => {
 
  const deleteContact = async(req, res) => {
     const {id} = req.params;
-    const result = await Contact.findByIdAndDelete(id);
+    const {_id : owner} = req.user;
+    const result = await Contact.findByIdAndDelete({id, owner});
   
     if(!result) {
         throw HttpError(404);
@@ -90,18 +91,6 @@ const updateStatusContact = async (req, res) => {
 };
 
 
-const getFavoriteContacts = async(req, res) =>{
-    const { favorite } = req.query;
-    const owner = req.user._id;
-    let contacts;
-        if (favorite === 'true') {
-            contacts = await Contact.find({ owner, favorite: true });
-        } else {
-            contacts = await Contact.find({ owner });
-        }
-
-        res.json(contacts);
-}
 
 
 export default {
@@ -111,5 +100,5 @@ export default {
     updateContact: ctrlWrapper(updateContact),
     deleteContact: ctrlWrapper(deleteContact),
     updateStatusContact: ctrlWrapper(updateStatusContact),
-    getFavoriteContacts: ctrlWrapper(getFavoriteContacts),
+    
 }
