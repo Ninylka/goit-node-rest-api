@@ -69,6 +69,8 @@ const logout = async (req, res) => {
   res.status(204).json();
 };
 const updateAvatar = async (req, res) => {
+  if (!req.file) {
+    throw HttpError(400,"No file uploaded");}
   const { _id } = req.user;
   const { path: tempUpload, originalname } = req.file;
   const filename = `${_id}_${originalname}`;
