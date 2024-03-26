@@ -23,6 +23,10 @@ const userSchema = new Schema ({
         type: String,
         default: null,
       },
+      avatarURL: {
+        type: String,
+        required: true,
+       },
       
 }, {versionKey: false , timestamps: false}
 )
@@ -31,3 +35,6 @@ userSchema.post("save", handleMongooseError);
 export const User = model("user", userSchema);
 
 export default User;
+
+
+
