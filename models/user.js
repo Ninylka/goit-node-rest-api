@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import handleMongooseError from "../helpers/handleMongooseError.js"
 import { emailRegexp } from "../schemas/usersSchemas.js";
+
 const subscriptionList =["starter", "pro", "business"]
 
 const userSchema = new Schema ({
@@ -27,6 +28,15 @@ const userSchema = new Schema ({
         type: String,
         required: true,
        },
+       verify: {
+        type: Boolean,
+        default: false,
+       },
+       verificationToken: {
+        type: String,
+        required: [true, 'Verify token is required'],
+
+       }
       
 }, {versionKey: false , timestamps: false}
 )

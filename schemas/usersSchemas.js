@@ -17,9 +17,18 @@ export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     email: Joi.string().pattern(emailRegexp).required(),
 })
 
+const userEmailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required(),
+})
+.messages({
+  "any.required": "missing required field email",
+});
+
 export const schemas = {
     registerSchema,
     loginSchema,
+    userEmailSchema,
 }
+
 
 

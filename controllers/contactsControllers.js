@@ -3,8 +3,6 @@ import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import HttpError from "../helpers/HttpError.js";
 import Contact from "../models/contact.js";
 
- 
-
 const getAllContacts = async (req, res) => {
     const {_id : owner} = req.user;
     const {page = 1, limit = 20} = req.query;
@@ -13,7 +11,6 @@ const getAllContacts = async (req, res) => {
     res.json(result);
 
 };
-
 
 
 const getOneContact = async (req, res) => {
@@ -28,7 +25,6 @@ const getOneContact = async (req, res) => {
     }
 
 
-
 const createContact = async (req, res) => {
     const {_id : owner} = req.user;
     const{email} = req.body;
@@ -40,8 +36,6 @@ const createContact = async (req, res) => {
     const result = await Contact.create({...req.body, owner});
     res.status(201).json(result);
   };
-
-
 
 
 const updateContact = async (req, res) => {
@@ -89,8 +83,6 @@ const updateStatusContact = async (req, res) => {
 
     res.json(result);
 };
-
-
 
 
 export default {

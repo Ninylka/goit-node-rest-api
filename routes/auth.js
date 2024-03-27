@@ -13,6 +13,8 @@ const {
     getCurrent,
     logout,
     updateAvatar,
+    verify,
+    resendVerify,
 } = auth;
 
 
@@ -23,4 +25,6 @@ authRouter.post("/login", validateBody(schemas.loginSchema), login);
 authRouter.get("/current",authenticate, getCurrent);
 authRouter.post("/logout",authenticate, logout);
 authRouter.patch("/avatars", authenticate, upload.single("avatar"), updateAvatar)
+authRouter.get("/verify/:verificationToken", verify);
+authRouter.post("/verify",validateBody(schemas.userEmailSchema), resendVerify)
 export default authRouter;
